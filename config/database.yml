@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: dpg-cdt4sfta49935khcv4jg-a
+  username: resortodb_user
+  password: v3SGmkIIqdWTFDRotm85YpCR8KSQSDCv
+  url: postgres://resortodb_user:v3SGmkIIqdWTFDRotm85YpCR8KSQSDCv@dpg-cdt4sfta49935khcv4jg-a/resortodb
+  pool: 5
+
+development:
+  <<: *default
+  database: resortodb
+
+
+test:
+  <<: *default
+  database: resortodb

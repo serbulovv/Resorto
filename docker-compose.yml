@@ -1,0 +1,36 @@
+version: "3.9"
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile
+  env_file:
+    - .env
+  stdin_open: true
+  tty: true
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST: dpg-cdt4sfta49935khcv4jg-a
+      POSTGRES_DATABASE: resortodb
+      POSTGRES_USER: resortodb_user
+      POSTGRES_PASSWORD: v3SGmkIIqdWTFDRotm85YpCR8KSQSDCv
+      POSTGRES_URL: postgres://resortodb_user:v3SGmkIIqdWTFDRotm85YpCR8KSQSDCv@dpg-cdt4sfta49935khcv4jg-a/resortodb
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"  && bash -c "bundle exec ruby ./Resorto/bin/setup"
+    volumes:
+      - .:/Resorto
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  telegram_bot:
+    <<: *app
+    environment:
+      TELEGRAM_API_KEY: ${TELEGRAM_API_KEY}
+    command: bundle exec ruby telegram_bot/telegram_bot.rb
