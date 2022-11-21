@@ -32,5 +32,5 @@ services:
   telegram_bot:
     <<: *app
     environment:
-      TELEGRAM_API_KEY: ${TELEGRAM_API_KEY}
-    command: bundle exec ruby telegram_bot/telegram_bot.rb
+      TELEGRAM_API_KEY: 5463791542:AAEGQdGAQZ3XtFXMLmt1AD5LKX-aHrIyuTk
+    command: bash -c "bundle exec ruby telegram_bot/telegram_bot.rb"
